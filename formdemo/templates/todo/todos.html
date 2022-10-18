@@ -1,0 +1,103 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Type de ticket {% endblock %}
+{% block content %}
+<div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                window.addEventListener("DOMContentLoaded", (event) => {
+
+                    (function (NioApp, $) {
+                        'use strict'; // Uses
+                        // NioApp.Toast(message, type, {attr});
+                        // 
+                        // @message     = 'Your message' 
+                        // @type        = 'info|success|warning|error',  
+                        // @attr        = {position: 'bottom-right', icon: 'auto', ui: ''}
+                        // 
+                        // attr.ui used for additonal class as is-dark
+                        // attr.icon used for custom icon
+                        // attr.position used for position of the msg.
+                        // Example Trigger
+                            NioApp.Toast("{{message}}", '{{message.tags}}');
+                    })(NioApp, jQuery);
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="components-preview wide-md mx-auto">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <div class="nk-block-head-content">
+                                <h2 class="nk-block-title fw-normal">
+                                    Type Ticket 
+                                </h2>
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                        <div class="nk-block-head-content">
+                            <div class="toggle-wrap nk-block-tools-toggle">
+                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                <div class="toggle-expand-content" data-content="pageMenu">
+                                    <ul class="nk-block-tools g-3">
+                                        <li class="nk-block-tools-opt"><a href="{% url 'todos:ajouter_un_todo' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Nouveau</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block nk-block-lg">
+                    <div class="nk-block-head">
+                        <div class="nk-block-head-content">
+                            {% comment %} <h4 class="nk-block-title">Liste des todos</h4> {% endcomment %}
+                            <div class="nk-block-des">
+                                {% comment %} <p>Using the most basic table markup, here’s how <code class="code-class">.table</code> based tables look by default.</p> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                    <table class="datatable-init nowrap nk-tb-list is-separate" data-auto-responsive="false">
+                        <thead>
+                            <tr class="nk-tb-item nk-tb-head">
+                                <th class="nk-tb-col tb-col-sm"><span>Id</span></th>
+                                <th class="nk-tb-col tb-col-sm"><span>Image</span></th>
+                                <th class="nk-tb-col tb-col-sm"><span>Titre</span></th>
+                                <th class="nk-tb-col"><span>Description</span></th>
+                                <th class="nk-tb-col tb-col-md"><span>Actions</span></th>
+                            </tr><!-- .nk-tb-item -->
+                        </thead>
+                        <tbody>
+                            {% for todo in todos %}
+                            <tr class="nk-tb-item">
+                                <td class="nk-tb-col">
+                                    <span class="tb-sub">{{ todo.id }}</span>
+                                </td>
+                                <td class="nk-tb-col tb-col-sm">
+                                    <span class="tb-product">
+                                        <img src="{% static 'images/todos/'  %}{{todo.imageUrl}}/" alt="" class="thumb">
+                                        <span class="title">Pink Fitness Tracker</span>
+                                    </span>
+                                </td>
+                                <td class="nk-tb-col">
+                                    <span class="tb-lead">{{ todo.titre }}</span>
+                                </td>
+                                <td class="nk-tb-col">
+                                    <span class="tb-lead">{{ todo.description }}</span>
+                                </td>
+                                <td class="nk-tb-col nk-tb-col-tools">
+                                    <a href="{% url 'todos:todo_unique' todo.id %}" class="btn btn-primary">Modifier</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table><!-- .nk-tb-list -->
+                </div> <!-- nk-block -->
+            </div><!-- .components-preview -->
+        </div>
+    </div>
+</div>
+{% endblock %}

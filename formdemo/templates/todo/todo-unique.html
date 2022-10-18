@@ -1,0 +1,94 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Nouveau type de ticket {% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="components-preview wide-md mx-auto">
+                <div class="nk-block-head nk-block-head-lg wide-sm">
+                    <div class="nk-block-head-content">
+                        <div class="nk-block-head-sub"><a class="back-to" href="{% url 'index' %}"><em class="icon ni ni-arrow-left"></em><span>Liste des todos</span></a></div>
+                        <h2 class="nk-block-title fw-normal">Nouveau Todo</h2>
+                        <div class="nk-block-des">
+                            {% comment %} <p class="lead">Using the <a href="https://jqueryvalidation.org/" target="_blank">jQuery Validation</a> plugin, you can simply add validation on clientside before submit form. The plugin also offering plenty of customization options. For a full overview of this plugin, check out the <a href="https://jqueryvalidation.org/" target="_blank">documentation</a>.</p> {% endcomment %}
+                        </div>
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block nk-block-lg">
+                    <div class="card">
+                        <div class="card-inner">
+                            <form action="{% url 'todos:modifier_todo' %}" class="form-validate" method="post">
+                                {% csrf_token %}
+
+                                <input type="text" class="form-control" name="todoId" value="{{todo.id}}" hidden>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="todoImage">Image du todo</label>
+                                        <div class="form-control-wrap">
+                                            <input type="file" class="form-control" value="{{todo.img}}" id="todoImage" name="todoImage">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-gs">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="todoNom">Nom</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" id="todoNom" name="todoNom" value="{{todo.titre}}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="todoDesc">Description</label>
+                                            <div class="form-control-wrap">
+                                                <textarea class="form-control form-control-sm" id="todoDesc" name="todoDesc" placeholder="Write your message" required>{{todo.description}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Completed {{todo.isCompleted}}</label>
+                                            <ul class="custom-control-group g-3 align-center">
+                                                <li>
+                                                    
+                                                    <div class="custom-control custom-radio">
+                                                        {% if todo.isCompleted %} 
+                                                            <input type="radio" class="custom-control-input" name="todoComp" id="todoCompOui" value="oui" required checked>
+                                                        {% else %}
+                                                            <input type="radio" class="custom-control-input" name="todoComp" id="todoCompOui" value="oui" required>
+                                                        {% endif %}
+                                                        <label class="custom-control-label" for="todoCompOui">Oui</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="custom-control custom-radio">
+                                                        {% if not todo.isCompleted %} 
+                                                            <input type="radio" class="custom-control-input" name="todoComp" id="todoCompNon" value="non" required checked>
+                                                        {% else %}
+                                                            <input type="radio" class="custom-control-input" name="todoComp" id="todoCompNon" value="non" required>
+                                                        {% endif %}
+                                                        
+                                                        <label class="custom-control-label" for="todoCompNon">Non</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-lg btn-primary">Modifier le todo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .components-preview -->
+        </div>
+    </div>
+</div>
+{% endblock %}
